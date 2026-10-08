@@ -1,0 +1,18 @@
+# Kaggle data and generated results
+data/raw/
+data/sample/
+output/
+
+# Local tools and Python environment
+.venv/
+lib/
+__pycache__/
+*.py[cod]
+pig_*.log
+*.tar.gz
+
+# Old synthetic-demo files: not part of final project
+scripts/generate_demo_data.py
+pig/01_validate_datafu.pig
+pig/02_fraud_detection.pig
+web/app_demo.py
