@@ -1,54 +1,28 @@
 # Cài WSL Ubuntu và lưu trên ổ D
 
-Hướng dẫn này cài Ubuntu trên WSL 2 và chuyển filesystem của Ubuntu sang ổ D để tránh làm đầy ổ C.
+Tài liệu này dành cho người muốn chạy Apache Pig thủ công trong Linux. Với nhu cầu demo/nộp bài, hãy ưu tiên chạy Docker theo [README](../README.md): đơn giản hơn và không cần cài các công cụ bên dưới.
 
-## Yêu cầu
+## 1. Cài WSL 2 và Ubuntu
 
-- Windows 10/11 hỗ trợ WSL 2.
-- Ổ D còn đủ dung lượng.
-- PowerShell mở bằng quyền **Run as Administrator**.
-
-## 1. Cài WSL và Ubuntu
-
-Mở PowerShell với quyền Administrator:
+Mở PowerShell bằng quyền Administrator:
 
 ```powershell
 wsl --install -d Ubuntu
 ```
 
-Khởi động lại máy nếu Windows yêu cầu.
+Khởi động lại nếu Windows yêu cầu. Sau đó mở Ubuntu từ Start Menu để đặt Linux username và password.
 
-Kiểm tra trạng thái:
+Kiểm tra WSL 2:
 
 ```powershell
-wsl --status
 wsl -l -v
 ```
 
-Ubuntu phải hiển thị `VERSION` là `2`.
+Ubuntu cần hiện `VERSION` là `2`.
 
-## 2. Khởi tạo Ubuntu
+## 2. Chuyển Ubuntu sang ổ D
 
-Mở ứng dụng **Ubuntu** từ Start Menu.
-
-Lần đầu mở, Ubuntu sẽ yêu cầu tạo:
-
-- Linux username
-- Linux password
-
-Kiểm tra môi trường:
-
-```bash
-whoami
-pwd
-java -version
-python3 --version
-git --version
-```
-
-## 3. Chuyển Ubuntu sang ổ D
-
-Đóng mọi cửa sổ Ubuntu. Trong PowerShell, chạy:
+Đóng tất cả cửa sổ Ubuntu, rồi chạy PowerShell Administrator:
 
 ```powershell
 wsl --shutdown
@@ -56,34 +30,9 @@ New-Item -ItemType Directory -Force D:\WSL
 wsl --manage Ubuntu --move D:\WSL\Ubuntu
 ```
 
-Lệnh này chuyển toàn bộ distro Ubuntu, bao gồm source code, packages và filesystem Linux sang:
+Lệnh này chuyển toàn bộ filesystem Ubuntu — bao gồm source, packages và môi trường Python — sang ổ D. Không kéo/thả hay di chuyển thủ công các file WSL trong `AppData`.
 
-```text
-D:\WSL\Ubuntu
-```
-
-Không tự di chuyển file WSL trong `AppData` bằng File Explorer.
-
-Kiểm tra lại:
-
-```powershell
-wsl -l -v
-wsl -d Ubuntu
-```
-
-Trong Ubuntu:
-
-```bash
-pwd
-```
-
-Kết quả mặc định:
-
-```text
-/home/<linux-username>
-```
-
-## 4. Cài công cụ cơ bản
+## 3. Cài công cụ chạy thủ công
 
 Trong Ubuntu:
 
@@ -100,28 +49,23 @@ python3 --version
 git --version
 ```
 
-## 5. Lỗi thường gặp
+Sau đó cài Apache Pig 0.17.0 và DataFu 1.6.1 theo phần chạy thủ công trong README.
 
-### `wsl: Failed to translate '...VS Code\bin'`
+## Lỗi thường gặp
 
-Đây thường là đường dẫn VS Code không còn tồn tại trong Windows `PATH`.
+### `wsl: Failed to translate '...VS Code\\bin'`
 
-Lỗi này thường không ảnh hưởng đến việc chạy Ubuntu, Java, Pig hoặc Python. Có thể xử lý sau bằng cách xóa đường dẫn VS Code cũ trong Windows Environment Variables.
+Đây thường là đường dẫn VS Code cũ trong Windows `PATH`. Nó thường không ảnh hưởng tới Java, Pig hay Python trong Ubuntu. Có thể xoá đường dẫn cũ trong Windows Environment Variables khi thuận tiện.
 
-### WSL nằm ở ổ C
+### Docker Desktop dừng sau `wsl --shutdown`
 
-Kiểm tra lại lệnh chuyển distro:
+Đây là bình thường vì Docker Desktop sử dụng WSL 2. Khởi động lại Docker Desktop hoặc chạy `docker desktop start` trong PowerShell trước khi dùng Docker.
 
-```powershell
-wsl --shutdown
-wsl --manage Ubuntu --move D:\WSL\Ubuntu
-```
+### Muốn chạy Docker trong Ubuntu
 
-### Docker Desktop bị dừng sau `wsl --shutdown`
+Không bắt buộc. Có thể chạy `docker compose` từ PowerShell trong folder project trên Windows. Docker Desktop sẽ dùng engine Linux của nó.
 
-Đây là hành vi bình thường. Mở lại Docker Desktop nếu cần dùng Docker.
-
-## Tài liệu tham khảo
+## Tham khảo
 
 - [Microsoft WSL Installation](https://learn.microsoft.com/en-us/windows/wsl/install)
 - [Microsoft WSL FAQ](https://learn.microsoft.com/en-us/windows/wsl/faq)

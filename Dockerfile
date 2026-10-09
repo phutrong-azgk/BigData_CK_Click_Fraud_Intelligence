@@ -29,3 +29,9 @@ RUN mkdir -p /app/lib \
     && wget -q -O /app/lib/datafu-pig-${DATAFU_VERSION}.jar \
        https://repo.maven.apache.org/maven2/org/apache/datafu/datafu-pig/${DATAFU_VERSION}/datafu-pig-${DATAFU_VERSION}.jar
 
+COPY pig/ ./pig/
+COPY web/ ./web/
+COPY scripts/run_pipeline.sh /usr/local/bin/run_pipeline
+RUN sed -i 's/\r$//' /usr/local/bin/run_pipeline \
+    && chmod +x /usr/local/bin/run_pipeline
+

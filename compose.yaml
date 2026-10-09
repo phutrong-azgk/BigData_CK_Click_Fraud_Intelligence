@@ -24,3 +24,8 @@ services:
         condition: service_completed_successfully
     volumes:
       - fraud_output:/app/output:ro
+    ports:
+      - "8501:8501"
+
+volumes:
+  fraud_output:
