@@ -2,9 +2,7 @@
 
 Project môn Big Data phân tích rủi ro click fraud trong quảng cáo di động. Hệ thống xử lý dữ liệu click thật bằng Apache Pig và Apache DataFu, sau đó hiển thị kết quả bằng Streamlit.
 
-## Chạy project nhanh nhất: Docker trên Windows
-
-Đây là cách khuyến nghị cho giảng viên và người dùng mới. Docker tự chuẩn bị Java, Pig, DataFu và Python; **không cần cài WSL, Java, Pig hoặc Python trên máy host**.
+## Chạy project: Docker trên Windows
 
 ### 1. Chuẩn bị
 
