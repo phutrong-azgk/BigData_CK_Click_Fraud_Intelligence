@@ -1,0 +1,26 @@
+name: click-fraud-intelligence
+
+services:
+  pipeline:
+    build:
+      context: .
+    command: ["run_pipeline"]
+    volumes:
+      - ./data/raw:/app/data/raw:ro
+      - fraud_output:/app/output
+    restart: "no"
+
+  web:
+    build:
+      context: .
+    command:
+      - streamlit
+      - run
+      - web/app.py
+      - --server.address=0.0.0.0
+      - --server.port=8501
+    depends_on:
+      pipeline:
+        condition: service_completed_successfully
+    volumes:
+      - fraud_output:/app/output:ro

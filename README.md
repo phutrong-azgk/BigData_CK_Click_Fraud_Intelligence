@@ -2,6 +2,28 @@
 
 Hệ thống phân tích rủi ro click fraud cho quảng cáo di động, sử dụng Apache Pig, Apache DataFu và Streamlit.
 
+## Chạy nhanh bằng Docker
+
+Đây là cách được khuyến nghị để chạy project vì không cần tự cài Java, Pig, DataFu hoặc Python.
+
+1. Cài Docker Desktop và bảo đảm lệnh `docker version` hiển thị cả Client lẫn Server.
+2. Tải `train_sample.csv` từ Kaggle và đặt tại `data/raw/train_sample.csv`.
+3. Tại thư mục gốc project, chạy:
+
+```bash
+docker compose up --build --force-recreate
+```
+
+Sau khi service `pipeline` hoàn tất, mở dashboard tại `http://localhost:8501`.
+
+Dừng containers:
+
+```bash
+docker compose down
+```
+
+Lưu ý: dataset Kaggle được mount vào container lúc chạy, không được copy vào Docker image hoặc Git repository.
+
 ## Mục tiêu
 
 - Xử lý log click quảng cáo quy mô lớn bằng Apache Pig.

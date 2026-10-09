@@ -16,3 +16,6 @@ scripts/generate_demo_data.py
 pig/01_validate_datafu.pig
 pig/02_fraud_detection.pig
 web/app_demo.py
+
+# Docker environment overrides
+.env
