@@ -207,6 +207,16 @@ top_chart = px.bar(
     title="Highest-risk IP addresses",
     labels={"risk_score": "Risk score", "ip": "IP address"},
 )
+top_chart.update_xaxes(
+    type="category",
+    categoryorder="array",
+    categoryarray=top_risk["ip"].tolist(),
+    tickangle=-45,
+)
+top_chart.update_layout(
+    xaxis_title="Anonymized IP address",
+    bargap=0.25,
+)
 st.plotly_chart(top_chart, width="stretch")
 
 st.subheader("Investigation table")
